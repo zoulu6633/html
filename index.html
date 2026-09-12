@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-page-node-id="iSyL0zZIC1ceqMHyc9TjlD">
-<head data-page-node-id="wgFqK07GbbtyTCNojkR8au">
-<meta charset="UTF-8" data-page-node-id="fDtlc0ewwGLUKH2mpLCXor">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="HHJfB0LwJaBrq6GwDUDIfN">
+<html lang="zh-CN" data-page-node-id="TsgXHb4i1bQaQLqAAIED3k">
+<head data-page-node-id="thnkykOcmMFwzCbliBKjQB">
+<meta charset="UTF-8" data-page-node-id="R8Eyt3pbGbRDFEnjrmnmGD">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="QuekApAuVaiyFGa5z8x9jL">
 <title>南京租房数据报告 · 贝壳</title>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
@@ -199,7 +199,7 @@
     border: 1px solid var(--line); color: var(--text-1); cursor: pointer;
     font-size: 13px; transition: all .18s;
   }
-  .pager button:hover:not(:disabled) { border-color: var(--accent); color: #fff; }
+    .pager button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
   .pager button:disabled { opacity: .35; cursor: not-allowed; }
   .pager span { color: var(--text-2); font-size: 13px; font-variant-numeric: tabular-nums; }
 
@@ -227,63 +227,94 @@
     .page-head h1 { font-size: 24px; }
     .biz-select, .layout-select, .rental-select { max-width: 100%; }
   }
+
+  /* 租金区间分布 - 卡片矩阵 */
+  .dist-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; }
+  .dist-card {
+    background: #f8fafc; border: 1px solid var(--line);
+    border-radius: var(--radius-sm); padding: 14px 14px 12px;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .dist-card:hover { transform: translateY(-2px); border-color: var(--line-strong); box-shadow: 0 8px 20px rgba(37,99,235,.08); }
+  .dist-card.dc-peak { border-color: var(--accent); background: rgba(37,99,235,.05); }
+  .dist-card .dc-label { font-size: 12px; color: var(--text-2); font-family: var(--mono); }
+  .dist-card .dc-value {
+    font-size: 22px; font-weight: 700; color: var(--text-0);
+    margin: 5px 0 2px; letter-spacing: -.5px; font-variant-numeric: tabular-nums;
+  }
+  .dist-card.dc-peak .dc-value { color: var(--accent); }
+  .dist-card.dc-peak .dc-label { color: var(--accent); }
+  .dist-card .dc-pct { font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .dist-card .dc-track { height: 4px; background: #e2e8f0; border-radius: 999px; margin-top: 10px; overflow: hidden; }
+  .dist-card .dc-fill { height: 100%; border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
+  @media (max-width: 1100px) { .dist-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .dist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 </head>
-<body data-page-node-id="M1oMQiF0Lb8ktlolGJe9zG">
-<div class="container" data-page-node-id="RBJYkIYBUljOyeVihA0im0">
-  <div class="page-head" data-page-node-id="BjQgdAcm6cUajCelu9WbbE">
-    <div class="kicker" data-page-node-id="r8UXetzimXOOYjNM39G4Zm">Rental Market Report</div>
-    <h1 data-page-node-id="VvDLsdWQQsjipkyPiqSWXa">南京租房数据报告</h1>
-    <div class="desc" data-page-node-id="fgcl1aUCBd928sHZykKjTM">基于贝壳平台 <b data-page-node-id="Pk7sUHi6SrttOv5asbp3pm">10968 条</b>在租房源 · 覆盖 12 个城区 · 含价格趋势与商圈对比</div>
+<body data-page-node-id="NTGAUNQRSFbtlPkPYUkHcR">
+<div class="container" data-page-node-id="qvfGFNsH23ximnosH3OIpO">
+  <div class="page-head" data-page-node-id="SOqbzCkE6AWuzTXgzzQixh">
+    <div class="kicker" data-page-node-id="DXGMIYvNTwBEHOFlVoUxLF">Rental Market Report</div>
+    <h1 data-page-node-id="W85TQIKaHzNGXXWeTFDwTB">南京租房数据报告</h1>
+    <div class="desc" data-page-node-id="cJ1WzXBpBbe0oDOiUqFoRB">基于贝壳平台 <b data-page-node-id="ULOCNIVlnzFmBFAAB4Jl7c">10968 条</b>在租房源 · 覆盖 12 个城区 · 含价格趋势与商圈对比</div>
   </div>
 
   <!-- 全局概览 KPI -->
-  <div class="cards overview-cards" data-role="overview-cards" data-page-node-id="vzNSPeskSz612aY5vLjp1e"></div>
+  <div class="cards overview-cards" data-role="overview-cards" data-page-node-id="iZLoQkCBr6oDDXvoDllgei"></div>
 
-  <nav class="tabs" data-page-node-id="A542iPiETUtF2XkkAC4EZw">
-    <button class="tab active" data-district="全部" data-page-node-id="l56HQ9Hwr1oP460ZATcOMS">全部</button>
-    <button class="tab" data-district="玄武" data-page-node-id="nJ6BC9P29fcrToth5Z7drh">玄武</button>
-    <button class="tab" data-district="鼓楼" data-page-node-id="u9ubij7CqWtC9iVJyezMcX">鼓楼</button>
-    <button class="tab" data-district="秦淮" data-page-node-id="FobNK4ReMwwSFDk9AeiQHo">秦淮</button>
-    <button class="tab" data-district="建邺" data-page-node-id="iGf4RbCWeAOwvguYv81Sgs">建邺</button>
-    <button class="tab" data-district="雨花台" data-page-node-id="nJUkc9oKuuhPdX2l4RWdO5">雨花台</button>
-    <button class="tab" data-district="栖霞" data-page-node-id="wE3I5iizj7vb0FZaypTAlB">栖霞</button>
-    <button class="tab" data-district="江宁" data-page-node-id="Gsm6ieziG4gBhNmxe7ZCoi">江宁</button>
-    <button class="tab" data-district="浦口" data-page-node-id="iCcbkPoM9KWkLTjh4Q59Hy">浦口</button>
-    <button class="tab" data-district="溧水" data-page-node-id="eQxBSGwtA3M2osWuJlE5pl">溧水</button>
-    <button class="tab" data-district="六合" data-page-node-id="IAXO8Vq5tODXVEnnQkONCE">六合</button>
-    <button class="tab" data-district="高淳" data-page-node-id="viC0Xgpbxl7oqlIUow47Xy">高淳</button>
-    <button class="tab" data-district="独栋" data-page-node-id="qGCODcLJ2bfwNxaRCMRJ5h">独栋</button>
+  <nav class="tabs" data-page-node-id="qna28Pyk73XHwOu8DpHTIe">
+    <button class="tab active" data-district="全部" data-page-node-id="kIYHfa5FVZTsi6EAdYn54Y">全部</button>
+    <button class="tab" data-district="玄武" data-page-node-id="vnfUQDh7L7YlYLhRl6zYHb">玄武</button>
+    <button class="tab" data-district="鼓楼" data-page-node-id="BVQy2Z87WegLH2AyvJkN7Q">鼓楼</button>
+    <button class="tab" data-district="秦淮" data-page-node-id="xtVXC1Le6TftFE4mPSR085">秦淮</button>
+    <button class="tab" data-district="建邺" data-page-node-id="pLB087wLnyDi4Hbga90y6O">建邺</button>
+    <button class="tab" data-district="雨花台" data-page-node-id="usXVVHS6rp5PgYoWlyrbvz">雨花台</button>
+    <button class="tab" data-district="栖霞" data-page-node-id="d73OhUU5hIKy00VcvuTYl0">栖霞</button>
+    <button class="tab" data-district="江宁" data-page-node-id="Evescez6H5ZZzsefCpPFAT">江宁</button>
+    <button class="tab" data-district="浦口" data-page-node-id="J7KNsHTqURcqE7004OZbFT">浦口</button>
+    <button class="tab" data-district="溧水" data-page-node-id="LuwVkYwCogSTH6uy7DpGUq">溧水</button>
+    <button class="tab" data-district="六合" data-page-node-id="tnXhLQ4uBAozAJtrrMRS7m">六合</button>
+    <button class="tab" data-district="高淳" data-page-node-id="qW324VHi2Ul4TUDPeCFq9L">高淳</button>
+    <button class="tab" data-district="独栋" data-page-node-id="8XWCnM9hL0BtHnYQQjhGA0">独栋</button>
   </nav>
 
+  <!-- 租金区间分布（卡片矩阵） -->
+  <div class="panel" style="margin-top:16px;" id="rent-distribution" data-page-node-id="NnPm7OfWlcJOsL5SjMMj5e">
+    <div class="panel-head" data-page-node-id="Adk5E8ekyIZ8siBvnHyC11">
+      <h3 data-page-node-id="982AHl4VZTidxTnu4QnsEa">租金区间分布</h3>
+      <span class="hint" data-page-node-id="tajwwOQMAkhk2fUP5mHUTh">Rent Distribution · 随城区与筛选联动</span>
+    </div>
+    <div class="dist-grid" data-role="distribution" data-page-node-id="zry0rkWrskK8p06HONHZQE"></div>
+  </div>
+
 <!-- 全局筛选 + 房源明细 -->
-  <div class="panel" style="margin-top:16px;" id="global-listing" data-page-node-id="1I1olrf0CCpIeEPrs0YdF8">
-    <div class="panel-head" data-page-node-id="rBIhyVSQvsUkTSnYnhuuKD">
-      <h3 data-page-node-id="O7DJ8K7ryuMIEVFPAzanAB">房源筛选与明细</h3>
-      <span class="hint" data-page-node-id="xvGxCBxELKY1SxBsT872U3">商圈 / 户型 / 租赁方式筛选 · 点击表头排序</span>
+  <div class="panel" style="margin-top:16px;" id="global-listing" data-page-node-id="QBeZgEjXLrIz9ZMrPH7J2a">
+    <div class="panel-head" data-page-node-id="hflpVcMgOJQPvZMZgHYQbW">
+      <h3 data-page-node-id="u59UdnU8moLol3INfhGdxa">房源筛选与明细</h3>
+      <span class="hint" data-page-node-id="auvGRkAueFWXPSwALQMbox">商圈 / 户型 / 租赁方式筛选 · 点击表头排序</span>
     </div>
-    <div class="biz-filter" style="margin:0 0 16px;" data-page-node-id="DiO3kcpENGbaftMosYxM85">
-      <span class="biz-filter-label" data-page-node-id="6YLQu2rUtWXn2RhjQlOXWg">商圈</span>
-      <select class="biz-select" id="global-biz-select" title="按商圈筛选" data-page-node-id="R4gHPFQmYkXkCp7wslFDuq"><option value="__all__" data-page-node-id="acNf5vx3tZJBhuXrw72aJO">全部商圈</option></select>
-      <span class="biz-filter-label" data-page-node-id="iczpJ1d2IaPkYieQlQ3lwg">户型</span>
-      <select class="layout-select" id="global-layout-select" title="按户型筛选" data-page-node-id="zMxXZijLGUsU5IpCOmDp7E"><option value="__all__" data-page-node-id="C10Ig2FELZFGLMKQKi1RyJ">全部户型</option></select>
-      <span class="biz-filter-label" data-page-node-id="HWTLyJOUYNuqH8xAiWadEx">租赁方式</span>
-      <select class="rental-select" id="global-rental-select" title="按租赁方式筛选" data-page-node-id="EpQXLXpj1I09YWmJOHvA3B"><option value="__all__" data-page-node-id="JcaFkA5SNYPBtBK5DMqFVT">全部方式</option></select>
+    <div class="biz-filter" style="margin:0 0 16px;" data-page-node-id="G5mJdYvEu0MjYChcOFMjJo">
+      <span class="biz-filter-label" data-page-node-id="6O0TuogLT6DoLqelgdUf2S">商圈</span>
+      <select class="biz-select" id="global-biz-select" title="按商圈筛选" data-page-node-id="aZ9xK5XsHvo3DcG3NeCH11"><option value="__all__" data-page-node-id="hAw9bA7ZSjyj39FWIDs1dH">全部商圈</option></select>
+      <span class="biz-filter-label" data-page-node-id="ksswq5dxfAA05eGwZ6qpiS">户型</span>
+      <select class="layout-select" id="global-layout-select" title="按户型筛选" data-page-node-id="depeWdxB16EqohLv5wvrNH"><option value="__all__" data-page-node-id="szLdGnUrAF1EiSCxZbDfPU">全部户型</option></select>
+      <span class="biz-filter-label" data-page-node-id="EloXPCOjfPfhYcER1wDE8A">租赁方式</span>
+      <select class="rental-select" id="global-rental-select" title="按租赁方式筛选" data-page-node-id="4aqoK7mIMLESsNV5FamGMl"><option value="__all__" data-page-node-id="JuCtHIrGypDa7soV9Dilql">全部方式</option></select>
     </div>
-    <div class="table-wrap" style="margin-top:0;" data-page-node-id="7sCvCqDpNajbZt1W7LA4Dj">
-      <table class="listing" id="global-listing-table" data-page-node-id="F6QOR2Sm0LH2ruXoXUK3CM">
-        <thead data-page-node-id="QfQdmNbn2gXriIFY6080wa">
-          <tr data-page-node-id="eOm9WYQEwnFfhDZMUEOlMA">
-            <th data-page-node-id="Zs1lU2o3lcSg4EmS6F3d29">小区</th>
-            <th data-page-node-id="EJSyxedHzWYNaP0uKd6US2">商圈</th>
-            <th data-page-node-id="bUP70aa52ayJfUVhDqZXDG">户型</th>
-            <th class="num sortable" data-sort="area" data-page-node-id="H6Yf2xvKQ0SzF82JUIAtFY">面积 ㎡</th>
-            <th class="num sortable" data-sort="rent" data-page-node-id="1HX2p2BKbRQTaNFMziMGPx">月租金</th>
-            <th data-page-node-id="ecEL3m7MToFWQ3euThdqBR">装修</th>
-            <th data-page-node-id="OdIueX7p7FU5BgfOa2yFk2">链接</th>
+    <div class="table-wrap" style="margin-top:0;" data-page-node-id="luUEGdLY88g7eap4jrI1oF">
+      <table class="listing" id="global-listing-table" data-page-node-id="0rxnkE2I0wdGGAZTBpd5SJ">
+        <thead data-page-node-id="sStAiCFIEFpN59MOV9uYk4">
+          <tr data-page-node-id="3vnCOGqY0steOMbgjiYbGK">
+            <th data-page-node-id="qolaujH7IFF9hs4YAxG0uk">小区</th>
+            <th data-page-node-id="VPwQrGMGhGFFjwD6kVZtyB">商圈</th>
+            <th data-page-node-id="MO11iO4LhLlK9NWqKBGUtR">户型</th>
+            <th class="num sortable" data-sort="area" data-page-node-id="kjgplD2tXSZzMRzrNnQl85">面积 ㎡</th>
+            <th class="num sortable" data-sort="rent" data-page-node-id="OilY9OLsAkU6ckeVGzjPtN">月租金</th>
+            <th data-page-node-id="rqxyOZgncddSjhghSxtFSc">装修</th>
+            <th data-page-node-id="8FSDYTr8oSGXLCNW8EeVYG">链接</th>
           </tr>
         </thead>
-        <tbody data-page-node-id="YVQBxah50TRrCPlIna67Jn"></tbody>
+        <tbody data-page-node-id="zb8CmjEBAbx887zfg5jBHS"></tbody>
       </table>
     </div>
   </div>
@@ -293,205 +324,75 @@
 
 
   <!-- 全局价格趋势区 -->
-  <div class="panel" style="margin-top:0;" data-page-node-id="nwuSs0TXYss7pU2EB8Z05i">
-    <div class="panel-head" data-page-node-id="inQIaa6pyHmg7v5OgcS6Ba">
-      <h3 data-page-node-id="lKMpAOkEJAEo5dMaJO2BTE">租金价格走势</h3>
-      <span class="hint" data-page-node-id="ealYGWWqGBhFaBlnhEJBCH">全市平均月租金随时间变化</span>
+  <div class="panel" style="margin-top:0;" data-page-node-id="4iMEKQnvTG1MJ5PQa9smtL">
+    <div class="panel-head" data-page-node-id="6K30p1qQquqFmthRX4TtsK">
+      <h3 data-page-node-id="gxWKvj92barMWnpFN6ztAZ">租金价格走势</h3>
+      <span class="hint" data-page-node-id="pHZGdK31dV2uIxL19nWJAu">全市平均月租金随时间变化</span>
     </div>
-    <div class="chart-grid" data-page-node-id="mTE0ubEKtlKytEO8q1lw2U">
-      <div class="chart-box" data-page-node-id="3C6M1YMTBgIkxmMUqgZ933">
-        <h3 data-page-node-id="mZi9pyHkU1tFfl4hTuKpMW">平均月租金趋势</h3>
-        <div class="chart-sub" data-page-node-id="G8cwBY3tq8ryjNipe5U138">AVG Monthly Rent Trend</div>
-        <div id="rent-chart" class="echart" data-page-node-id="AHY2eyNBpCiFD8G40sRqGI"></div>
+    <div class="chart-grid" data-page-node-id="TiZqUstDK6YZSiwQaFHGwq">
+      <div class="chart-box" data-page-node-id="mowXmfPyzgYfQhlBCL8tyX">
+        <h3 data-page-node-id="ADWMxDzhhpw1j9RPgLpK4U">平均月租金趋势</h3>
+        <div class="chart-sub" data-page-node-id="BYp7RZFXN37tLToZPZRCHk">AVG Monthly Rent Trend</div>
+        <div id="rent-chart" class="echart" data-page-node-id="gZod05TmDuncsiYuP9WunK"></div>
       </div>
-      <div class="chart-box" data-page-node-id="bFmJcVyANKFvAkQHy6teMF">
-        <h3 data-page-node-id="yJcEy3UOMClsT2lQAsIp3f">城区租金涨跌排行</h3>
-        <div class="chart-sub" data-page-node-id="yLznqzozcGcrF40vxucSzi">District Rent Change Ranking</div>
-        <div id="district-change-chart" class="echart" data-page-node-id="2RAH3X9rwctzFUHxx4h5sb"></div>
+      <div class="chart-box" data-page-node-id="i2ED0n6AlSfDBDXmsrK2BU">
+        <h3 data-page-node-id="TCRgmEUMTJJpriPYTfIKDd">城区租金涨跌排行</h3>
+        <div class="chart-sub" data-page-node-id="lDGrTw4xEm73mqQPL0NXN3">District Rent Change Ranking</div>
+        <div id="district-change-chart" class="echart" data-page-node-id="qFv4nVCnkeUFhBcu48ku2m"></div>
       </div>
     </div>
-    <div class="table-wrap" data-page-node-id="w7foV16aRXbrSWOlFTQReC">
-      <div class="panel-head" style="margin:16px 0 8px;" data-page-node-id="W6NIMOBNYIyyPUFNDnJNgY">
-        <h3 data-page-node-id="D7qh3MrAfefcBwfbzIecQ3">城区租金对比</h3>
-        <span class="hint" data-page-node-id="9LorvTL2ngVLUUzgjih4JA">上一期 vs 当前期平均租金变化</span>
+    <div class="table-wrap" data-page-node-id="I5dXb81Nsaw3oGU1xkuhq2">
+      <div class="panel-head" style="margin:16px 0 8px;" data-page-node-id="T2b94rYPCGkPSq9ktCR9hX">
+        <h3 data-page-node-id="XXFkJO4ZqqS4JwhuHRJKMY">城区租金对比</h3>
+        <span class="hint" data-page-node-id="iE6KVivMpmlrrYRpasfBFR">上一期 vs 当前期平均租金变化</span>
       </div>
-      <table class="trend-table" data-page-node-id="E1y7C2CA5A97uJyaCvYIzZ">
-        <thead data-page-node-id="aNnwTtXLOYxnq4SQHCuZFo">
-          <tr data-page-node-id="1dXN5kGPrUUJ3Q5QeQEdnI">
-            <th data-page-node-id="AssEYFcS7HmFX8ASJSSVKH">城区</th>
-            <th class="num" data-page-node-id="qJvSnN75tAzpKPwp3rA5lM">上期均价</th>
-            <th class="num" data-page-node-id="pjAbLoELfCBbbShFnHd761">当前均价</th>
-            <th class="num" data-page-node-id="pCz2jQFemk1xZ4UKVG5M8S">涨跌</th>
-            <th class="num" data-page-node-id="nXrElaMTLZQwJprzwnO9y5">上期房源</th>
-            <th class="num" data-page-node-id="ohPeQfxPCo2cT6ZBNZ0QQQ">当前房源</th>
-            <th class="num" data-page-node-id="25anhNO7TMNtI8LVWG8G7N">房源变化</th>
+      <table class="trend-table" data-page-node-id="Uemk8DudboHpCzURI8C1GB">
+        <thead data-page-node-id="atWEuW5nkB70B9pBnUPBdm">
+          <tr data-page-node-id="3RM005EjzAhWJaGxQiSz8U">
+            <th data-page-node-id="c45VU4JHTkH7y1suEB1c5B">城区</th>
+            <th class="num" data-page-node-id="GA9W7okaZXlTxmt3Nw3gKb">上期均价</th>
+            <th class="num" data-page-node-id="obgUl6WUtHCAzmp6e6pf1y">当前均价</th>
+            <th class="num" data-page-node-id="exOIdkXVznFgdhDzJiXlux">涨跌</th>
+            <th class="num" data-page-node-id="bGOcRR1AWu88Gsaal0Lmdq">上期房源</th>
+            <th class="num" data-page-node-id="tzyh3QJFkPumfnXKASPU9w">当前房源</th>
+            <th class="num" data-page-node-id="ILoVRNBZPZBf0LIdgPUAUr">房源变化</th>
           </tr>
         </thead>
-        <tbody id="trend-body" data-page-node-id="nKdB7zXPad7pOOvoMsR2TD"></tbody>
+        <tbody id="trend-body" data-page-node-id="gTKQdBwaPnw9CwYA9y1MGq"></tbody>
       </table>
     </div>
-    <div class="table-wrap" data-page-node-id="r1GIu8TAjmEHGNcOrshpuI">
-      <div class="panel-head" style="margin:16px 0 8px;" data-page-node-id="QYmKFCDIbfIEe1qK2QtUjL">
-        <h3 data-page-node-id="HPlSHoibCBiyB9JbXSXxTX">商圈租金对比</h3>
-        <div class="biz-filter" style="margin:0; padding:6px 10px;" data-page-node-id="HFWpKUuDi6A6uLikahfExH">
-          <span class="biz-filter-label" data-page-node-id="yfq5SNt7gu2CO3izf3Xht0">城区</span>
-          <select id="biz-district-filter" class="biz-select" title="按城区筛选商圈趋势" data-page-node-id="4dqgAbSSsi6QhndYUMCJbx">
-            <option value="__all__" data-page-node-id="3uBu1RG8huHHMNv0pnvmQ8">全部城区</option>
+    <div class="table-wrap" data-page-node-id="i4yIsmIDCIaq3ZjuwFswui">
+      <div class="panel-head" style="margin:16px 0 8px;" data-page-node-id="te3FYbyB5JlqBLOk1QeVJW">
+        <h3 data-page-node-id="3clUF5hKEB3E15oG1DUHBy">商圈租金对比</h3>
+        <div class="biz-filter" style="margin:0; padding:6px 10px;" data-page-node-id="olv6wrqoR8pnj6LOG21QWe">
+          <span class="biz-filter-label" data-page-node-id="oZ4BMjjIf9eQrJI3Wkc2QS">城区</span>
+          <select id="biz-district-filter" class="biz-select" title="按城区筛选商圈趋势" data-page-node-id="aBsURLc5T1LqenYzTnrw0N">
+            <option value="__all__" data-page-node-id="6rAQlMpB2q7heJxLTxJxN0">全部城区</option>
           </select>
         </div>
       </div>
-      <table class="trend-table" data-page-node-id="TRq8XWrBSZqJxFba4UI4Di">
-        <thead data-page-node-id="aHJoyTBQrq6VPajOenMFrR">
-          <tr data-page-node-id="EsEnIIFbbVcLIWxofOMzgK">
-            <th data-page-node-id="VmMwTKcTyzagt4GPZBl5no">城区</th>
-            <th data-page-node-id="J4oB7fuajZnm6kCP46rQEG">商圈</th>
-            <th class="num" data-page-node-id="CPnaCPRDtwM18fQzweIH13">上期均价</th>
-            <th class="num" data-page-node-id="KneWGpaUADvPxujO0bvIXn">当前均价</th>
-            <th class="num" data-page-node-id="7Md9tWEBy2BhD8a44mf4Sz">涨跌</th>
-            <th class="num" data-page-node-id="C3ts84JNLxOsl4lwFTXYw9">上期房源</th>
-            <th class="num" data-page-node-id="RSz58rEJd1AnAtnN2ELXQN">当前房源</th>
-            <th class="num" data-page-node-id="GWfcmKxJMS06TpTmtjXQz2">房源变化</th>
+      <table class="trend-table" data-page-node-id="EzgUP9oFjKjYAjqy7qext1">
+        <thead data-page-node-id="2SkTKIU3bkObli36dflbKX">
+          <tr data-page-node-id="FEqIWAq9zedhD0Y2RVjG6B">
+            <th data-page-node-id="gvj4MbDIUFCIHR8x2dpXtq">城区</th>
+            <th data-page-node-id="kACaAtHJCfoh7Iio3IENhX">商圈</th>
+            <th class="num" data-page-node-id="adIWBMts79aioKMAEW5bW9">上期均价</th>
+            <th class="num" data-page-node-id="hwAhKmt8cbuDhb8Zhdzbiz">当前均价</th>
+            <th class="num" data-page-node-id="MrDTwLWf5iow0kMUEctuB2">涨跌</th>
+            <th class="num" data-page-node-id="EkzGyrSpZsESY3hnScdMlG">上期房源</th>
+            <th class="num" data-page-node-id="Fw3ZABeFweu1500gcg37oP">当前房源</th>
+            <th class="num" data-page-node-id="dde0uBWAztLjDFsM38EAw3">房源变化</th>
           </tr>
         </thead>
-        <tbody id="business-trend-body" data-page-node-id="G8jIjcEY4VMcwusGxqhDyL"></tbody>
+        <tbody id="business-trend-body" data-page-node-id="vFR2vshsZjqS1YcLN1hVIt"></tbody>
       </table>
     </div>
   </div>
 
-  <main data-page-node-id="PPVo5EJ6jJvXNY0CjsA318">
-    <section class="report-panel" data-district="全部" data-page-node-id="Lzn876TWQQbtprUo1F08z4">
-      <div class="panel" style="margin-top:0;" data-page-node-id="QZSB39ocnVLC184JM6HuIU">
-        <div class="panel-head" data-page-node-id="y7ekNqg2TtBVLAObyXjRJv">
-          <h3 data-page-node-id="DaFO7VWaVzj1wqXfwdi6vi">租金区间分布</h3>
-          <span class="hint" data-page-node-id="IxsW4rmZ8PEBPC3DrSOx4W">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="9CC0pXNIOd4lmtaDs2RMhz"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="玄武" hidden data-page-node-id="WXSKsg2uJ2gng1fQ6oZGKJ">
-      <div class="panel" style="margin-top:0;" data-page-node-id="p03anmMUbSMoQhnsEKgnFs">
-        <div class="panel-head" data-page-node-id="8crWGtob8vFizEexF9Qdk2">
-          <h3 data-page-node-id="0FgZxDvZyAYRAsGXJuM7nj">租金区间分布</h3>
-          <span class="hint" data-page-node-id="x4fjd8Hk6Ah1Q0sAB8ZoDC">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="FTUGeHmBwa8jNYEirU53JZ"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="鼓楼" hidden data-page-node-id="GIIOuQoqgdi1XgTRjrdAq8">
-      <div class="panel" style="margin-top:0;" data-page-node-id="e7qwHjD2LgExo1boBASDZL">
-        <div class="panel-head" data-page-node-id="NJDKuqOrHuCd3JDdWKjdgb">
-          <h3 data-page-node-id="z3owoAnYrlR9ZymOXrZawQ">租金区间分布</h3>
-          <span class="hint" data-page-node-id="LsRJLfIoXoqKxmDOsK9aca">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="9u53LHIQ8Vmj9i7AkdGFLy"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="秦淮" hidden data-page-node-id="rMYTXLEGZjubKuH2THCSAm">
-      <div class="panel" style="margin-top:0;" data-page-node-id="JKguxmuBw6t4AjifCErMPl">
-        <div class="panel-head" data-page-node-id="IxnEQ0a6cGgXPLI00ATxVF">
-          <h3 data-page-node-id="QBpTfMO5jM8uBePufygehL">租金区间分布</h3>
-          <span class="hint" data-page-node-id="U4rQzy2tyn3Wz8Ev0RBUNv">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="jY9jwaDNovmNnwq3PxssdI"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="建邺" hidden data-page-node-id="Kdj0EDwp5hAVkaD3lOqWLK">
-      <div class="panel" style="margin-top:0;" data-page-node-id="c0A1lCVkOaOG1ALS4bjzok">
-        <div class="panel-head" data-page-node-id="LM8rTGGXyOS8WyuryzUB5G">
-          <h3 data-page-node-id="GGoV8leteyCFTfg0hMyNEH">租金区间分布</h3>
-          <span class="hint" data-page-node-id="iGvEPxDqGixjl0MHAP2RG6">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="i1HC5PsO8cW9GB8vBAhP0q"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="雨花台" hidden data-page-node-id="zerPf9j46h7lXvHJjL0UWX">
-      <div class="panel" style="margin-top:0;" data-page-node-id="0bJBuh2sKX5CbVrvElVs91">
-        <div class="panel-head" data-page-node-id="URBEhioOQQlSaclsYF55lN">
-          <h3 data-page-node-id="tz6tl7XjHvYwQSipm5m9L5">租金区间分布</h3>
-          <span class="hint" data-page-node-id="en8mSaNGoXitbay8O4wepM">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="5UTlFTclTpDjVOXbsT1CQ2"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="栖霞" hidden data-page-node-id="ROXqKhnfFmnOj8buQyf3aB">
-      <div class="panel" style="margin-top:0;" data-page-node-id="Ff9H36fNNYY60600VAXMbv">
-        <div class="panel-head" data-page-node-id="T7yxiNAAsOsJWmIA1KslVa">
-          <h3 data-page-node-id="hqn3Cj9O6iLQg4hxR9R3PB">租金区间分布</h3>
-          <span class="hint" data-page-node-id="0ZBSAtMx4s9szerC3kLYG9">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="SAnjkKRX92fqBCpvzPQgvQ"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="江宁" hidden data-page-node-id="LJaNEeF7hinsBX1O5ojC38">
-      <div class="panel" style="margin-top:0;" data-page-node-id="1bEIoTFV9cfcrnqIRY1cWK">
-        <div class="panel-head" data-page-node-id="ihfHy8K5oov5DTbelpjxTg">
-          <h3 data-page-node-id="wvo6p0Zfh6KGpQy6A5ITQf">租金区间分布</h3>
-          <span class="hint" data-page-node-id="DvNN1y450CYIwDIzObtris">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="B8AnDIqdxvVWRu66pE5HY9"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="浦口" hidden data-page-node-id="KHB9iyRrvOehZDzVDVFG2G">
-      <div class="panel" style="margin-top:0;" data-page-node-id="WBYirkGKZNHNYbPaYY0dkd">
-        <div class="panel-head" data-page-node-id="FWKssWTuv10yULsyRfr9v7">
-          <h3 data-page-node-id="lm6FCqguH0rdJXD9fUzChq">租金区间分布</h3>
-          <span class="hint" data-page-node-id="cHzDbUKYnn41CQjZpVUd1p">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="shYWI5HOidmivr7Byykbti"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="溧水" hidden data-page-node-id="QAvPMvNCwT5pnlZOWaI0hT">
-      <div class="panel" style="margin-top:0;" data-page-node-id="5nYrNyW2IPOkKsMuJNKOsP">
-        <div class="panel-head" data-page-node-id="J9ezOUXDWCi8g7GGGa24ky">
-          <h3 data-page-node-id="BQwk7sqe5NfIxc2BPugrtk">租金区间分布</h3>
-          <span class="hint" data-page-node-id="IAlgK68Wgm12zLfOacoxsC">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="YmHHYDilJNz6xBGqnUZsW0"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="六合" hidden data-page-node-id="G7tbDgvAcZAE1HobDPSCT3">
-      <div class="panel" style="margin-top:0;" data-page-node-id="zZCCSq6HfFLtTicahlrdOa">
-        <div class="panel-head" data-page-node-id="aTkzoGITZpKXfIGJKQyub4">
-          <h3 data-page-node-id="dkXsFc7nE916RiHfBOrf0X">租金区间分布</h3>
-          <span class="hint" data-page-node-id="JvAPkKpLJOFAsdPhBG3rmZ">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="AbDpG5jdODyfcvRnsvm8p0"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="高淳" hidden data-page-node-id="7t998LrAuxHixdfgbBb1xC">
-      <div class="panel" style="margin-top:0;" data-page-node-id="tEq3lh1BF3kuCPLWvJ57lc">
-        <div class="panel-head" data-page-node-id="EDjs3vgyZLbzDPCoZroxRa">
-          <h3 data-page-node-id="3Sr4TG5xSkBFVSvvzhECgk">租金区间分布</h3>
-          <span class="hint" data-page-node-id="jZvzwsJbQ0oLhjbrrF29M8">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="QwxKFEIDrwpp90ReXFndAx"></div>
-      </div>
-    </section>
-
-    <section class="report-panel" data-district="独栋" hidden data-page-node-id="26MvCX4B4k5oRtHvxWZJPi">
-      <div class="panel" style="margin-top:0;" data-page-node-id="S6fEqueEtpnfcMeXZlsVDQ">
-        <div class="panel-head" data-page-node-id="kdFjrIdaD3nrVSK73WrLqK">
-          <h3 data-page-node-id="WBES0HSKZ0BCmeOsJqMh0i">租金区间分布</h3>
-          <span class="hint" data-page-node-id="2L0BLcVSMNZzM6ZghKAhzh">Rent Distribution</span>
-        </div>
-        <div data-role="buckets" data-page-node-id="A7LPaQpo9LPCQbcqmOQfiO"></div>
-      </div>
-    </section>
-  </main>
+  
 
 
-    <div class="footer" data-page-node-id="FeEKo4x7FadVwS0G9cJKav">
+    <div class="footer" data-page-node-id="XVvCUx2peNcGS91bl97sUx">
     南京租房数据报告 · 数据来源贝壳平台 MySQL house_listings · 自动生成
   </div>
 </div>
@@ -513,38 +414,28 @@
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         currentDistrict = tab.dataset.district;
-        document.querySelectorAll('.report-panel').forEach(p => {
-          const show = p.dataset.district === currentDistrict;
-          p.hidden = !show;
-          if (show) fillPanel(p);
-        });
-        renderOverview(currentDistrict);
+        // 先重建筛选器选项（会把筛选重置为「全部」），最后统一渲染，
+        // 保证 KPI / 区间分布 / 明细表三者使用的是同一套筛选条件
         fillGlobalFilter(currentDistrict);
         fillGlobalListing();
+        renderDistribution(currentDistrict);
+        renderOverview(currentDistrict);
       });
     });
 
-    // 每个 panel 只渲染租金分布
-    document.querySelectorAll('.report-panel').forEach(panel => {
-      fillPanel(panel);
-    });
-
-    // 全局筛选器选项填充 + 明细
+    // 首次渲染：筛选器 + 明细 + 区间分布
     fillGlobalFilter('全部');
     fillGlobalListing();
+    renderDistribution('全部');
 
-    // 全局筛选器 change 事件
-    document.getElementById('global-biz-select').addEventListener('change', () => {
-      fillPanel(currentPanel());
-      fillGlobalListing();
-    });
-    document.getElementById('global-layout-select').addEventListener('change', () => {
-      fillPanel(currentPanel());
-      fillGlobalListing();
-    });
-    document.getElementById('global-rental-select').addEventListener('change', () => {
-      fillPanel(currentPanel());
-      fillGlobalListing();
+    // 全局筛选器 change 事件：联动明细表与区间分布
+    ['global-biz-select', 'global-layout-select', 'global-rental-select'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => {
+        // 商圈 / 户型 / 租赁方式 任一变化：KPI 卡片、区间分布、明细表同步刷新
+        renderOverview(currentDistrict);
+        fillGlobalListing();
+        renderDistribution(currentDistrict);
+      });
     });
 
     renderOverview();
@@ -565,10 +456,6 @@
     return active ? active.dataset.district : '全部';
   }
 
-  function currentPanel() {
-    const d = currentDistrict();
-    return document.querySelector('.report-panel[data-district="' + d + '"]');
-  }
 
   function filteredItems(district) {
     const biz = document.getElementById('global-biz-select').value;
@@ -638,23 +525,20 @@
   function fillGlobalListing() {
     const district = currentDistrict();
     const tbody = document.querySelector('#global-listing-table tbody');
-    tbody.innerHTML = '';
-    const frag = document.createDocumentFragment();
-    filteredItems(district).forEach(it => {
-      const tr = document.createElement('tr');
-      tr.dataset.rent = it.monthly_rent == null ? '' : it.monthly_rent;
-      tr.dataset.area = it.area == null ? '' : it.area;
-      tr.innerHTML =
+    // 一次性拼串写入，避免逐行 createElement 造成的卡顿（万级数据）
+    const html = filteredItems(district).map(it =>
+      '<tr data-rent="' + (it.monthly_rent == null ? '' : it.monthly_rent) +
+      '" data-area="' + (it.area == null ? '' : it.area) + '">' +
         '<td>' + it.community_name + '</td>' +
         '<td>' + (it.business_district || '-') + '</td>' +
         '<td>' + (it.layout || '-') + '</td>' +
         '<td class="num badge-area">' + (it.area == null ? '-' : it.area) + '</td>' +
         '<td class="num badge-rent">' + (it.monthly_rent == null ? '-' : it.monthly_rent) + '</td>' +
         '<td>' + (it.decoration || '-') + '</td>' +
-        '<td><a href="' + it.source_url + '" target="_blank" rel="noopener">详情 ↗</a></td>';
-      frag.appendChild(tr);
-    });
-    tbody.appendChild(frag);
+        '<td><a href="' + it.source_url + '" target="_blank" rel="noopener">详情 ↗</a></td>' +
+      '</tr>'
+    ).join('');
+    tbody.innerHTML = html;
     initTable(document.getElementById('global-listing-table'));
   }
 
@@ -681,23 +565,28 @@
     return { count, avg_rent: avg(rents), median_rent: medianRent(rents), avg_area: avgArea(areas), rent_buckets };
   }
 
-  function fillPanel(panel) {
-    const district = panel.dataset.district;
+  const DIST_COLORS = ['#85b7eb', '#185fa5', '#378add', '#85b7eb', '#f59e0b', '#d97706', '#b45309', '#92400e'];
+
+  function renderDistribution(district) {
+    const el = document.querySelector('[data-role="distribution"]');
+    if (!el) return;
     const s = computeStats(filteredItems(district));
-    const maxb = Math.max(...s.rent_buckets.map(b => b.count));
-    const bucketsEl = panel.querySelector('[data-role="buckets"]');
-    if (bucketsEl) {
-      bucketsEl.innerHTML = s.rent_buckets.map(b =>
-        `<div class="bar-row">` +
-          `<span class="bar-label">${b.label}</span>` +
-          `<div class="bar-track"><div class="bar-fill" style="width:${maxb ? (b.count / maxb * 100).toFixed(1) : 0}%"></div></div>` +
-          `<span class="bar-value">${b.count} 套</span>` +
-        `</div>`
-      ).join('');
-    }
+    const total = s.rent_buckets.reduce((a, b) => a + b.count, 0);
+    const maxb = Math.max(...s.rent_buckets.map(b => b.count), 1);
+    el.innerHTML = s.rent_buckets.map((b, i) => {
+      const pct = total ? b.count / total * 100 : 0;
+      const w = b.count / maxb * 100;
+      const peak = (b.count === maxb && b.count > 0) ? ' dc-peak' : '';
+      return '<div class="dist-card' + peak + '">' +
+        '<div class="dc-label">' + b.label + '</div>' +
+        '<div class="dc-value">' + b.count + '</div>' +
+        '<div class="dc-pct">' + pct.toFixed(1) + '%</div>' +
+        '<div class="dc-track"><div class="dc-fill" style="width:' + w.toFixed(1) + '%;background:' + DIST_COLORS[i % DIST_COLORS.length] + '"></div></div>' +
+      '</div>';
+    }).join('');
   }
 
-  function deltaHtml(v, suffix) {
+    function deltaHtml(v, suffix) {
     if (v == null || isNaN(v)) return '<span class="delta-none">-</span>';
     const cls = v > 0 ? 'delta-up' : v < 0 ? 'delta-down' : 'delta-none';
     const sign = v > 0 ? '+' : '';
@@ -708,6 +597,7 @@
     tbody.innerHTML = '';
     if (!trends || !trends.length) {
       tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align:center;color:#94a3b8">暂无对比数据</td></tr>`;
+      paginateTable(tbody.closest('table'));
       return;
     }
     const hasDistrictCol = nameKey !== 'district' && 'district' in trends[0];
@@ -733,6 +623,8 @@
       frag.appendChild(tr);
     });
     tbody.appendChild(frag);
+    const table = tbody.closest('table');
+    if (table) { table.dataset.page = '1'; paginateTable(table); }
   }
 
   function renderTrend() {
@@ -773,18 +665,10 @@
   function renderOverview(district) {
     const el = document.querySelector('[data-role="overview-cards"]');
     if (!el) return;
-    // 根据城区取数据：全部 -> overall，否则从 listings 实时统计
-    let s;
-    if (!district || district === '全部') {
-      const o = DATA.overall;
-      s = { count: o.count, avg_rent: o.avg_rent, median_rent: o.median_rent, avg_area: o.avg_area };
-    } else {
-      const items = DATA.listings.filter(l => {
-        const d = district === '独栋' ? (l.district == null ? '独栋' : l.district) : l.district;
-        return d === district;
-      });
-      s = computeStats(items);
-    }
+    // 未显式传参时，取当前选中的城区
+    if (!district) district = currentDistrict();
+    // 始终按「当前城区 + 当前筛选条件（商圈/户型/租赁方式）」实时统计
+    const s = computeStats(filteredItems(district));
     el.innerHTML =
       '<div class="card"><div class="label"><span class="ic" style="background:rgba(91,140,255,.15)">📦</span>房源数量</div><div class="value">' + s.count + '<span class="unit">套</span></div><span class="spark">LISTINGS</span></div>' +
       '<div class="card"><div class="label"><span class="ic" style="background:rgba(56,217,195,.15)">¥</span>平均月租金</div><div class="value">' + fmt(s.avg_rent) + '<span class="unit">元</span></div><span class="spark">AVG RENT</span></div>' +
@@ -890,54 +774,57 @@
     });
   }
 
-  function initTable(table) {
-    const tbody = table.querySelector('tbody');
-    const pageSize = 20;
-    let page = 1;
-    let sortKey = '';
-    let sortDesc = true;
+  const PAGE_SIZE = 15;
 
+  // 通用分页：每页 15 条，超出才显示翻页条
+  function paginateTable(table, pageSize) {
+    if (!table) return;
+    pageSize = pageSize || PAGE_SIZE;
+    const tbody = table.querySelector('tbody');
     let pager = table.nextElementSibling;
     if (!pager || !pager.classList.contains('pager')) {
       pager = document.createElement('div');
       pager.className = 'pager';
       table.after(pager);
     }
+    const rows = Array.from(tbody.rows);
+    const total = rows.length;
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    let page = parseInt(table.dataset.page || '1', 10);
+    if (isNaN(page) || page < 1) page = 1;
+    if (page > pages) page = pages;
+    table.dataset.page = String(page);
 
-    function render() {
-      const rows = Array.from(tbody.rows);
-      let data = rows.slice();
-      if (sortKey) {
-        data.sort((a, b) => {
-          const va = parseFloat(a.dataset[sortKey]);
-          const vb = parseFloat(b.dataset[sortKey]);
-          if (isNaN(va) && isNaN(vb)) return 0;
-          if (isNaN(va)) return 1;
-          if (isNaN(vb)) return -1;
-          return (va - vb) * (sortDesc ? -1 : 1);
-        });
-      }
-      const total = data.length;
-      const pages = Math.max(1, Math.ceil(total / pageSize));
-      page = Math.min(page, pages);
-      const start = (page - 1) * pageSize;
-      data.forEach(r => { r.style.display = 'none'; });
-      data.slice(start, start + pageSize).forEach(r => { r.style.display = ''; });
-      tbody.append(...data);
-
+    // 不足一页：全部显示，隐藏翻页条
+    if (total <= pageSize) {
+      rows.forEach(r => { r.style.display = ''; });
       pager.textContent = '';
-      const prev = document.createElement('button');
-      prev.textContent = '‹ 上一页';
-      prev.disabled = page <= 1;
-      prev.onclick = () => { page--; render(); };
-      const info = document.createElement('span');
-      info.textContent = `${page} / ${pages} · 共 ${total} 条`;
-      const next = document.createElement('button');
-      next.textContent = '下一页 ›';
-      next.disabled = page >= pages;
-      next.onclick = () => { page++; render(); };
-      pager.append(prev, info, next);
+      pager.style.display = 'none';
+      return;
     }
+
+    const start = (page - 1) * pageSize;
+    rows.forEach((r, i) => { r.style.display = (i >= start && i < start + pageSize) ? '' : 'none'; });
+
+    pager.style.display = '';
+    pager.textContent = '';
+    const prev = document.createElement('button');
+    prev.textContent = '‹ 上一页';
+    prev.disabled = page <= 1;
+    prev.onclick = () => { table.dataset.page = String(page - 1); paginateTable(table, pageSize); };
+    const info = document.createElement('span');
+    info.textContent = page + ' / ' + pages + ' · 共 ' + total + ' 条';
+    const next = document.createElement('button');
+    next.textContent = '下一页 ›';
+    next.disabled = page >= pages;
+    next.onclick = () => { table.dataset.page = String(page + 1); paginateTable(table, pageSize); };
+    pager.append(prev, info, next);
+  }
+
+  function initTable(table) {
+    const tbody = table.querySelector('tbody');
+    let sortKey = '';
+    let sortDesc = true;
 
     table.querySelectorAll('th.sortable').forEach(th => {
       if (th.dataset.bound) return;
@@ -946,13 +833,25 @@
         const key = th.dataset.sort;
         if (sortKey === key) { sortDesc = !sortDesc; }
         else { sortKey = key; sortDesc = true; }
-        page = 1;
-        render();
+        const rows = Array.from(tbody.rows);
+        rows.sort((a, b) => {
+          const va = parseFloat(a.dataset[key]);
+          const vb = parseFloat(b.dataset[key]);
+          if (isNaN(va) && isNaN(vb)) return 0;
+          if (isNaN(va)) return 1;
+          if (isNaN(vb)) return -1;
+          return (va - vb) * (sortDesc ? -1 : 1);
+        });
+        tbody.append(...rows);
+        table.dataset.page = '1';
+        paginateTable(table);
       });
     });
 
-    render();
+    table.dataset.page = '1';
+    paginateTable(table);
   }
+
 </script>
 </body>
 </html>
